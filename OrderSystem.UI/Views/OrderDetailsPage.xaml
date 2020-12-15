@@ -1,0 +1,75 @@
+﻿<Page x:Class="OrderSystem.UI.Views.OrderDetailsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:OrderSystem.UI.Views"
+      mc:Ignorable="d" 
+      d:DesignHeight="350" d:DesignWidth="500"
+      Title="OrderDetailsPage">
+
+    <Grid Background="DeepSkyBlue">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10" />
+            <ColumnDefinition Width="6*" />
+            <ColumnDefinition Width="6*" />
+            <ColumnDefinition Width="6*" />
+            <ColumnDefinition Width="6*" />
+            <ColumnDefinition Width="6*" />
+            <ColumnDefinition Width="6*" />
+            <ColumnDefinition Width="10" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10" />
+            <RowDefinition Height="35" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="35" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="10" />
+        </Grid.RowDefinitions>
+
+        <Label      Grid.Row="1" Grid.Column="1" Content="ORDER" Style="{StaticResource LabelStyle}"/>
+        <TextBox    Grid.Row="1" Grid.Column="2" Text="{Binding Id, Mode=OneWay}" Style="{StaticResource TextBoxStyle}"/>
+        <Label      Grid.Row="1" Grid.Column="3" Content="DATE/TIME" Style="{StaticResource LabelStyle}"/>
+        <TextBox    Grid.Row="1" Grid.Column="4" Text="{Binding DateTime,Mode=OneWay}"  Style="{StaticResource TextBoxStyle}"/>
+
+        <Button x:Name="Orders" Grid.Row="1" Grid.Column="6" Click="Orders_Click" Content="Orders >" Background="LightSteelBlue"/>
+
+        <Label      Grid.Row="3" Grid.Column="1" Content="STATE" Style="{StaticResource LabelStyle}"/>
+        <TextBox    Grid.Row="3" Grid.Column="2" Text="{Binding State, Mode=OneWay}" Style="{StaticResource TextBoxStyle}"/>
+        <Label      Grid.Row="3" Grid.Column="3" Content="TOTAL" Style="{StaticResource LabelStyle}"/>
+        <TextBox    Grid.Row="3" Grid.Column="4" Text="{Binding Total,Mode=OneWay,StringFormat='c'}"  Style="{StaticResource TextBoxStyle}"/>
+
+        <Button x:Name="ProcessOrder" Grid.Row="3" Grid.Column="6" Click="ProcessOrder_Click" Background="LightSteelBlue">
+            <Button.Style >
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="Visibility" Value="Hidden" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding State}" Value="Pending">
+                            <Setter Property="Visibility" Value="Visible"/>
+                            <Setter Property="Content" Value="Process" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding State}" Value="New">
+                            <Setter Property="Visibility" Value="Visible"/>
+                            <Setter Property="Content" Value="Submit" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+
+        <DataGrid x:Name="dgOrderItems" 
+                  Background="LightYellow"
+                  Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="6" 
+                  AutoGenerateColumns="False" ItemsSource="{Binding OrderItems,Mode=OneWay}" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="SKU" Binding="{Binding StockItemId}" Width="100" />
+                <DataGridTextColumn Header="Item" Binding="{Binding Description}" Width="*" />
+                <DataGridTextColumn Header="Qty" Binding="{Binding Quantity}" Width="150" />
+                <DataGridTextColumn Header="Price" Binding="{Binding Price,StringFormat='c'}" Width="150" />
+                <DataGridTextColumn Header="Total" Binding="{Binding Total,StringFormat='c'}" Width="150" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Page>

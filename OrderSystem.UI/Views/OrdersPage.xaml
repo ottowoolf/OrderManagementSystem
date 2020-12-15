@@ -1,0 +1,45 @@
+﻿<Page x:Class="OrderSystem.UI.Views.OrdersPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:OrderSystem.UI.Views"
+      mc:Ignorable="d" 
+      d:DesignHeight="350" d:DesignWidth="500"
+      Title="OrdersPage"
+      >
+
+    <Grid Background="DeepSkyBlue">
+        <Grid.ColumnDefinitions >
+            <ColumnDefinition Width="10" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="10" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="10" />
+        </Grid.RowDefinitions>
+
+        <Button x:Name="AddOrder" Content="Add Order" Click="AddOrder_Click" Grid.Row="3" Grid.Column="1" Width="250" HorizontalAlignment="Center" Background="LightSteelBlue"/>
+
+        <DataGrid x:Name="dgOrders" Grid.Column="1" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" Background="LightYellow">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Id" Binding="{Binding Id}" Width="100*"/>
+                <DataGridTextColumn Header="DateTime" Binding="{Binding DateTime}" Width="150*" />
+                <DataGridTextColumn Header="Items" Binding="{Binding OrderItems.Count}" Width="100*" />
+                <DataGridTextColumn Header="Total" Binding="{Binding Total,StringFormat='c'}" Width="150*" />
+                <DataGridTextColumn Header="State" Binding="{Binding State}" Width="150*" />
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Click="OrderDetails_Click" Background="LightSteelBlue">Details</Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Page>
